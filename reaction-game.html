@@ -41,8 +41,9 @@
 
 	<script type="text/javascript">
 	
-		let startTime = new Date();
-	
+		function createObject() {
+		startTime = new Date();
+		
 		const object = document.getElementById("object")
 		const durationSpan = document.getElementById("durationSpan");
 		
@@ -63,13 +64,25 @@
 		
 		object.style.left = `${randomPosition()}px`
 		object.style.top = `${randomPosition()}px`
+		object.style.display = "block";
+		
+		}
+		
+		let startTime = new Date();
+		createObject();
+	
+		
 	
 		object.onclick = function() {
-		
 			object.style.display = "none";
 			let duration = (new Date() - startTime)/1000;
 			durationSpan.innerHTML = duration + "s";
-		
+			
+			const randomTime = Math.random() *2500
+			console.log(randomTime);
+			
+			setTimeout(createObject, randomTime);
+	
 		}
 
 		
