@@ -1,0 +1,82 @@
+
+<!doctype html>
+<html lang="en">
+
+	<head>
+	    <meta charset="utf-8" />
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>JavaScript</title>
+		
+		
+	<style type="text/css">
+	
+		#object {
+		
+			height: 100px;
+			width: 100px;
+			background-color: yellow;
+			position: relative;
+			top: 100px;
+			left: 100px;
+		
+		}
+	
+	
+	</style>
+
+	</head>
+
+	<body>
+	
+		<h1>Test Your Reactions</h1>
+		
+		<p>Click on the boxes and circles as quickly as you can!</p>
+		
+		<p>Your time: <span id="durationSpan"></span></p>
+		
+		<div id="object"></div>
+		
+
+
+	<script type="text/javascript">
+	
+		let startTime = new Date();
+	
+		const object = document.getElementById("object")
+		const durationSpan = document.getElementById("durationSpan");
+		
+		
+		let circleOrSquare = Math.floor(Math.random() * 2);
+		object.style.borderRadius = `${circleOrSquare * 50}%`;
+		
+		let randomSize = (Math.random() * 200) + 50;
+		object.style.width = `${randomSize}px`;
+		object.style.height = `${randomSize}px`;
+		
+		let randomColor = Math.floor(Math.random() * 256);
+		object.style.backgroundColor = `hsl(${randomColor}, 100%, 50%)`;
+		
+		function randomPosition() {
+			return Math.floor(Math.random() * 500);
+		}
+		
+		object.style.left = `${randomPosition()}px`
+		object.style.top = `${randomPosition()}px`
+	
+		object.onclick = function() {
+		
+			object.style.display = "none";
+			let duration = (new Date() - startTime)/1000;
+			durationSpan.innerHTML = duration + "s";
+		
+		}
+
+		
+	</script>	
+
+	
+	</body
+
+
+</html>
