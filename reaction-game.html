@@ -6,10 +6,16 @@
 	    <meta charset="utf-8" />
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link href="https://fonts.googleapis.com/css?family=Varela+Round&display=swap" rel="stylesheet">
 		<title>Reaction Game</title>
 		
 		
 	<style type="text/css">
+		
+		body {
+			font-family: 'Varela Round', sans-serif;
+		
+		}
 	
 		#object {
 		
@@ -19,6 +25,12 @@
 			position: relative;
 			top: 100px;
 			left: 100px;
+		
+		}
+		
+		#time {
+		
+			font-weight: bold;
 		
 		}
 	
@@ -31,9 +43,9 @@
 	
 		<h1>Test Your Reactions</h1>
 		
-		<p>Click on the boxes and circles as quickly as you can!</p>
+		<p id="info">Click on the boxes and circles as quickly as you can!</p>
 		
-		<p>Your time: <span id="durationSpan"></span></p>
+		<p id="time">Your time: <span id="durationSpan"></span></p>
 		
 		<div id="object"></div>
 		
@@ -42,11 +54,11 @@
 	<script type="text/javascript">
 	
 		function createObject() {
+		
 		startTime = new Date();
 		
 		const object = document.getElementById("object")
 		const durationSpan = document.getElementById("durationSpan");
-		
 		
 		let circleOrSquare = Math.floor(Math.random() * 2);
 		object.style.borderRadius = `${circleOrSquare * 50}%`;
@@ -58,12 +70,18 @@
 		let randomColor = Math.floor(Math.random() * 256);
 		object.style.backgroundColor = `hsl(${randomColor}, 100%, 50%)`;
 		
-		function randomPosition() {
-			return Math.floor(Math.random() * 500);
+		function randomPositionLeft() {
+			return Math.floor(Math.random() * (window.innerWidth - randomSize) ); 	// To keep the shape from appearing off the page.  -randomSize accounts for the width of the object itself
 		}
 		
-		object.style.left = `${randomPosition()}px`
-		object.style.top = `${randomPosition()}px`
+		function randomPositionTop() {
+			return Math.floor(Math.random() * (window.innerHeight-150-randomSize)); // The -150 accounts for the height of the titles
+			
+	
+		}
+		
+		object.style.left = `${randomPositionLeft()}px`
+		object.style.top = `${randomPositionTop()}px`
 		object.style.display = "block";
 		
 		}
@@ -79,7 +97,6 @@
 			durationSpan.innerHTML = duration + "s";
 			
 			const randomTime = Math.random() *2500
-			console.log(randomTime);
 			
 			setTimeout(createObject, randomTime);
 	
