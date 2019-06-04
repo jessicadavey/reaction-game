@@ -41,6 +41,8 @@
 		Total time: <span id="totalTimeSpan"></span><br>
 		Number of tries: <span id="triesSpan"></span></p>
 
+	<button id="start">Start!</button>
+
 	<div id="object"></div>
 
 
@@ -53,6 +55,7 @@
 			const durationSpan = document.getElementById("durationSpan");
 			const totalTimeSpan = document.getElementById("totalTime");
 			const triesSpan = document.getElementById("triesSpan");
+
 
 			let circleOrSquare = Math.floor(Math.random() * 2);
 			object.style.borderRadius = `${circleOrSquare * 50}%`;
@@ -71,8 +74,8 @@
 			}
 
 			function randomPositionTop() {
-				return Math.floor(Math.random() * (window.innerHeight - 150 -
-					randomSize)); // The -150 accounts for the height of the titles
+				return Math.floor(Math.random() * (window.innerHeight - 170 -
+					randomSize)); // The -170 accounts for the height of the titles
 
 			}
 
@@ -82,10 +85,15 @@
 
 		}
 
+		const startButton = document.getElementById("start");
 		let startTime = new Date();
 		let totalTime = 0;
 		let tries = 0;
-		createObject();
+
+		startButton.onclick = () => {
+			createObject();
+			startButton.style.display = "none";
+		}
 
 		object.onclick = function () {
 			object.style.display = "none";
@@ -100,7 +108,12 @@
 			triesSpan.innerHTML = tries;
 
 			const randomTime = Math.random() * 2500
-			setTimeout(createObject, randomTime);
+			const timeOut = setTimeout(createObject, randomTime);
+
+			if (tries >= 10) {
+				clearTimeout(timeOut);
+				startButton.style.display = "block";
+			}
 
 		}
 	</script>
