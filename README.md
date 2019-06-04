@@ -14,3 +14,8 @@ Circles and squares of varying sizes and colors appear on the screen in differen
 - Colors using HSV and randomly-generated numbers for the "hue" property
 - Passed a random number to "set Timeout" so that shape reappeared at random times
 - Used "window.innerHeight" and "window.innerWidth" as maximum random numbers to be generated for specifying a random position, subtracting the size of the element itself to keep the shape from appearing off the visible portion of the screen
+
+## Additional features (not part of the course)
+- Added a "start" button to start the game
+- Total time is displayed after 10 shapes
+- Best times are held in Local Storage and the player is alerted when they have achieved a new best score
