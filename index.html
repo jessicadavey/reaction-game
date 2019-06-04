@@ -25,6 +25,36 @@
 		#time {
 
 			font-weight: bold;
+			display: none;
+
+		}
+
+		#totalTime {
+
+			font-weight: bold;
+
+		}
+
+		#start {
+
+			float: left;
+
+		}
+
+		#reset {
+
+			display: none;
+			float: left;
+			margin-left: 5px;
+
+		}
+
+		#bestScore {
+
+			color: green;
+			font-weight: normal;
+			background-color: yellow;
+			text-align: center;
 
 		}
 	</style>
@@ -35,13 +65,15 @@
 
 	<h1>Test Your Reactions</h1>
 
-	<p id="info">Click on the boxes and circles as quickly as you can!</p>
+	<p id="info">Click on the shapes as quickly as you can!</p>
 
 	<p id="time">Your time: <span id="durationSpan"></span><br>
-		Total time: <span id="totalTimeSpan"></span><br>
-		Number of tries: <span id="triesSpan"></span></p>
+		Number: <span id="triesSpan"></span></p>
 
+	<p id="totalTime"></p>
+	<p id="bestScore"></p>
 	<button id="start">Start!</button>
+	<button id="reset">Reset High Scores</button>
 
 	<div id="object"></div>
 
@@ -53,7 +85,6 @@
 
 			const object = document.getElementById("object")
 			const durationSpan = document.getElementById("durationSpan");
-			const totalTimeSpan = document.getElementById("totalTime");
 			const triesSpan = document.getElementById("triesSpan");
 
 
@@ -86,6 +117,10 @@
 		}
 
 		const startButton = document.getElementById("start");
+		const resetScoresButton = document.getElementById("reset");
+		const display = document.getElementById("time");
+		const totalTimeP = document.getElementById("totalTime");
+		const bestScoreP = document.getElementById("bestScore");
 		let startTime = new Date();
 		let totalTime = 0;
 		let tries = 0;
@@ -93,6 +128,18 @@
 		startButton.onclick = () => {
 			createObject();
 			startButton.style.display = "none";
+			totalTimeP.style.display = "none";
+			bestScoreP.style.display = "none";
+			time.style.display = "block";
+
+			// Reset
+			tries = 0;
+			triesSpan.innerHTML = "";
+			totalTime = 0;
+			durationSpan.innerHTML = "";
+
+			// Hide reset scores
+			resetScoresButton.style.display = "none";
 		}
 
 		object.onclick = function () {
@@ -102,7 +149,7 @@
 			durationSpan.innerHTML = duration + "s";
 
 			totalTime += duration;
-			totalTimeSpan.innerHTML = totalTime + "s";
+
 
 			tries++;
 			triesSpan.innerHTML = tries;
@@ -111,10 +158,42 @@
 			const timeOut = setTimeout(createObject, randomTime);
 
 			if (tries >= 10) {
+				// Stop showing new shapes
 				clearTimeout(timeOut);
+
+				// Display the start/play again button
 				startButton.style.display = "block";
+				startButton.innerHTML = "Play again!";
+
+				// Show the reset best times button
+				resetScoresButton.style.display = "block";
+
+				// Show the total time
+				time.style.display = "none";
+				totalTimeP.style.display = "block";
+				totalTimeP.innerHTML = "Total time: " + totalTime + "s";
+
+				// Deal with high score
+				let lowestScore = localStorage.getItem("score");
+				if (lowestScore === null) lowestScore = Infinity;
+
+				if (totalTime < lowestScore) {
+					bestScoreP.style.display = "block";
+					bestScoreP.innerHTML = " Best time!";
+					localStorage.setItem("score", totalTime);
+
+				}
+
 			}
 
+			// Reset scores
+
+			resetScoresButton.onclick = () => {
+				localStorage.setItem("score", Infinity);
+				totalTimeP.style.display = "none";
+				bestScoreP.style.display = "none";
+				resetScoresButton.style.display = "none";
+			}
 		}
 	</script>
 
