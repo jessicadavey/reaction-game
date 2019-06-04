@@ -1,105 +1,111 @@
-
 <!doctype html>
 <html lang="en">
 
-	<head>
-	    <meta charset="utf-8" />
-		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link href="https://fonts.googleapis.com/css?family=Varela+Round&display=swap" rel="stylesheet">
-		<title>Reaction Game</title>
-		
-		
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link href="https://fonts.googleapis.com/css?family=Varela+Round&display=swap" rel="stylesheet">
+	<title>Reaction Game</title>
+
+
 	<style type="text/css">
-		
 		body {
-		
+
 			font-family: 'Varela Round', sans-serif;
 
 		}
-	
+
 		#object {
-		
+
 			position: relative;
-		
+
 		}
-		
+
 		#time {
-		
+
 			font-weight: bold;
-		
+
 		}
-	
-	
 	</style>
 
-	</head>
+</head>
 
-	<body>
-	
-		<h1>Test Your Reactions</h1>
-		
-		<p id="info">Click on the boxes and circles as quickly as you can!</p>
-		
-		<p id="time">Your time: <span id="durationSpan"></span></p>
-		
-		<div id="object"></div>
-		
+<body>
+
+	<h1>Test Your Reactions</h1>
+
+	<p id="info">Click on the boxes and circles as quickly as you can!</p>
+
+	<p id="time">Your time: <span id="durationSpan"></span><br>
+		Total time: <span id="totalTimeSpan"></span><br>
+		Number of tries: <span id="triesSpan"></span></p>
+
+	<div id="object"></div>
 
 
-	<script type="text/javascript">
-	
+	<script>
 		function createObject() {
-		
+
 			startTime = new Date();
-			
+
 			const object = document.getElementById("object")
 			const durationSpan = document.getElementById("durationSpan");
-			
+			const totalTimeSpan = document.getElementById("totalTime");
+			const triesSpan = document.getElementById("triesSpan");
+
 			let circleOrSquare = Math.floor(Math.random() * 2);
 			object.style.borderRadius = `${circleOrSquare * 50}%`;
-			
+
 			let randomSize = (Math.random() * 200) + 20;
 			object.style.width = `${randomSize}px`;
 			object.style.height = `${randomSize}px`;
-			
+
 			let randomColor = Math.floor(Math.random() * 256);
 			object.style.backgroundColor = `hsl(${randomColor}, 100%, 50%)`;
-			
+
 			function randomPositionLeft() {
-				return Math.floor(Math.random() * (window.innerWidth - randomSize) ); 	// To keep the shape from appearing off the page.  -randomSize accounts for the width of the object itself
+				return Math.floor(Math.random() * (window.innerWidth -
+					randomSize
+				)); // To keep the shape from appearing off the page.  -randomSize accounts for the width of the object itself
 			}
-			
+
 			function randomPositionTop() {
-				return Math.floor(Math.random() * (window.innerHeight-150-randomSize)); // The -150 accounts for the height of the titles
-		
+				return Math.floor(Math.random() * (window.innerHeight - 150 -
+					randomSize)); // The -150 accounts for the height of the titles
+
 			}
-			
+
 			object.style.left = `${randomPositionLeft()}px`
 			object.style.top = `${randomPositionTop()}px`
 			object.style.display = "block";
-		
+
 		}
-		
+
 		let startTime = new Date();
+		let totalTime = 0;
+		let tries = 0;
 		createObject();
-	
-		object.onclick = function() {
+
+		object.onclick = function () {
 			object.style.display = "none";
-			
-			let duration = (new Date() - startTime)/1000;
+
+			let duration = (new Date() - startTime) / 1000;
 			durationSpan.innerHTML = duration + "s";
-			
-			const randomTime = Math.random() *2500
+
+			totalTime += duration;
+			totalTimeSpan.innerHTML = totalTime + "s";
+
+			tries++;
+			triesSpan.innerHTML = tries;
+
+			const randomTime = Math.random() * 2500
 			setTimeout(createObject, randomTime);
-	
+
 		}
+	</script>
 
-		
-	</script>	
 
-	
-	</body
-
+</body>
 
 </html>
